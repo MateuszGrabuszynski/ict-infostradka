@@ -5,20 +5,20 @@ Projekt zintegrowanego systemu wyświetlaczy informacyjnych opartych o komputery
 
 ## Przygotowania
 Aby przygotować Raspberry Pi do poprawnego działania w systemie należy kolejno:
-1) Pobrać ze strony https://www.raspberrypi.org/downloads/raspbian/ pełną wersję systemu Raspbian (with desktop);
-2) Poprzez program Etcher, bądź inny służący do tego celu, zgrać pobrany obraz płyty na kartę microSD;
-3) Uruchomić Raspberry Pi z włożoną kartą microSD i wykonać następujące kroki:
-3.1) Otworzyć terminal (Ctrl+Alt+T);
-3.2) Wpisać `sudo raspi-config`;
-3.2.1) W zakładce 5 (Interfacing Options) przejść do P2 (SSH) i uruchomić obsługę protokołu. Pomoże to w późniejszej konfiguracji ustawień;
-3.2.2) W zakładce 7 (Advanced Options) przejść do A2 (Overscan) i wyłączyć tą opcję;
-3.2.3) Wyjść z menu klawiszem Esc;
-3.3) Wpisać `sudo apt-get update` i poczekać na zakończenie pobierania;
-3.4) Wpisać `sudo apt-get upgrade -y` i poczekać na zakończenie instalacji;
-3.5) Zainstalować odpowiednie programy poleceniem `sudo apt-get install chromium-browser x11-xserver-utils unclutter`. Może pojawić się monit o przerwaniu instalacji niektórych programów ze względu na wcześniejsze ich posiadanie, należy to zignorować;
-3.6) Przygotować odpowiedni plik autostartu:
-3.6.1) Wpisać `nano ~/.config/lxsession/LXDE-pi/autostart`;
-3.6.2) Zamienić zawartość pliku na następującą (dostępna w pliku autostart):
+1. Pobrać ze strony https://www.raspberrypi.org/downloads/raspbian/ pełną wersję systemu Raspbian (with desktop);
+2. Poprzez program Etcher, bądź inny służący do tego celu, zgrać pobrany obraz płyty na kartę microSD;
+3. Uruchomić Raspberry Pi z włożoną kartą microSD i wykonać następujące kroki:
+3.1. Otworzyć terminal (Ctrl+Alt+T);
+3.2. Wpisać `sudo raspi-config`;
+3.2.1. W zakładce 5 (Interfacing Options) przejść do P2 (SSH) i uruchomić obsługę protokołu. Pomoże to w późniejszej konfiguracji ustawień;
+3.2.2. W zakładce 7 (Advanced Options) przejść do A2 (Overscan) i wyłączyć tą opcję;
+3.2.3. Wyjść z menu klawiszem Esc;
+3.3. Wpisać `sudo apt-get update` i poczekać na zakończenie pobierania;
+3.4. Wpisać `sudo apt-get upgrade -y` i poczekać na zakończenie instalacji;
+3.5. Zainstalować odpowiednie programy poleceniem `sudo apt-get install chromium-browser x11-xserver-utils unclutter`. Może pojawić się monit o przerwaniu instalacji niektórych programów ze względu na wcześniejsze ich posiadanie, należy to zignorować;
+3.6. Przygotować odpowiedni plik autostartu:
+3.6.1. Wpisać `nano ~/.config/lxsession/LXDE-pi/autostart`;
+3.6.2. Zamienić zawartość pliku na następującą (dostępna w pliku autostart):
      @lxpanel --profile LXDE
      @pcmanfm --desktop --profile LXDE
      @xset s off
@@ -26,9 +26,12 @@ Aby przygotować Raspberry Pi do poprawnego działania w systemie należy kolejn
      @xset s noblank
      @sed -i 's/"exited_cleanly": false/"exited_cleanly": true/' ~/.config/chromium Default/Preferences
      @chromium-browser --noerrdialogs --kiosk --incognito --disable-translate [URL_serwera_głównego!]
-3.7) Dodać odpowiednie zmienne konfiguracyjne w pliku (obecnie nie istnieje na repozytorium);
-3.8) Zrestartować Raspberry Pi poleceniem `sudo reboot now`.
-Po zrestartowaniu urządzenia na monitorze powinna się wyświetlić odpowiednia strona. Pierwsze pobieranie paczek informacji z serwera może trwać kilka minut. Jeśli jednak po kilku minutach urządzenie nadal wyświetla biały ekran bądź wyświetli się komunikat "Aw, snap!" ze znajomym dinozaurem - należy w pierwszej kolejności sprawdzić połączenie internetowe (polecenia `ifconfig` oraz `ping`), a następnie podane URL serwera i dane konfiguracyjne w pliku.
+3.7. Dodać odpowiednie zmienne konfiguracyjne w pliku (obecnie nie istnieje na repozytorium);
+3.8. Zrestartować Raspberry Pi poleceniem `sudo reboot now`.  
+
+Po zrestartowaniu urządzenia na monitorze powinna się wyświetlić odpowiednia strona. Pierwsze pobieranie paczek informacji z serwera może trwać kilka minut. Jeśli jednak po kilku minutach urządzenie nadal wyświetla biały ekran bądź wyświetli się komunikat "Aw, snap!" ze znajomym dinozaurem - należy w pierwszej kolejności sprawdzić połączenie internetowe (polecenia `ifconfig` oraz `ping`), a następnie podane URL serwera i dane konfiguracyjne w pliku.  
+
+Zaczerpnięto z pewnymi zmianami z https://github.com/elalemanyo/raspberry-pi-kiosk-screen
 
 ## Ograniczenia
 System w fazie developerskiej - odnajdowane ograniczenia będą dodawane na bieżąco.
