@@ -41,9 +41,9 @@ Zaczerpnięto z pewnymi zmianami z https://github.com/elalemanyo/raspberry-pi-ki
 System w fazie developerskiej - odnajdowane ograniczenia będą dodawane na bieżąco.
 
 ## Autorzy
-Mateusz Norel
-Tomasz Walczak
-Mateusz Grabuszyński
+* Mateusz Norel
+* Tomasz Walczak
+* Mateusz Grabuszyński
 
 ## Ostatnia zmiana
-2018-03-26 12:10
+2018-03-29 14:13
