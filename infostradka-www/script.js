@@ -57,16 +57,16 @@ function getJson(){
 				'duration': 15,
 				'type': 'www',
 				'content': {
-					'source': 'https://onet.pl/'
+					'source': 'http://example.org/'
 				}
-			}
+			},
 			{
 				'since': '2018-04-10 22:00',
 				'until': '2019-04-10 22:00',
 				'duration': 15,
 				'type': 'www',
 				'content': {
-					'source': 'https://onet.pl/'
+					'source': 'http://example.com/'
 				}
 			}
 		],
@@ -86,14 +86,16 @@ function getJson(){
 				'until': '2019-04-10 22:00',
 				'duration': 15,
 				'title': 'Aaa, kotki dwa',
-				'content': '...szarobure obydwa czy coś tam jakoś tam coś.'
+				'content': '...szarobure obydwa czy coś tam jakoś tam coś.<br><br>BARDZO DUŻO TEKSTU TUTAJ...',
+				'important': 0
 			},
 			{
 				'since': '2018-04-10 22:00',
 				'until': '2019-04-10 22:00',
 				'duration': 5,
 				'title': 'News2',
-				'content': 'Lill news numero due'
+				'content': 'Lill news numero due',
+				'important': 1
 			}
 		]
 	};
@@ -143,6 +145,12 @@ function rotator(){
 			newsN++;
 		}
 		console.log('rotator/changeNews');
+		if(currentJson['news'][newsN]['important']){
+			$('#bottom-container').css('background-color', '#910000');
+		}
+		else{
+			$('#bottom-container').css('background-color', '#006991');
+		}
 		$('#info-title').html(Object(currentJson['news'][newsN]['title']));
 		$('#info-main').html(Object(currentJson['news'][newsN]['content']));
 		currentNewsTimer = 0;

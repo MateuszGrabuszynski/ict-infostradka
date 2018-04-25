@@ -19,7 +19,7 @@ font-family: 'Playfair Display', serif;*/
 }
 
 /*structure*/
-body{
+body, html{
 	margin:0
 }
 
@@ -48,21 +48,27 @@ body{
 	width:100vw;
 	height:20vh;
 	overflow:hidden;
-	background-color:#f0fff0 
+	background-color:#006991;
+	border:0
 }
 
 #bottom-left{
+	display:table-cell;
+	vertical-align:middle;
 	width:15vw;
-	height:20vh;
-	background-color: #006991;
-	float:left;
+	border:0
+	/*height:20vh;
+	float:left;*/
 }
 
 #bottom-right{
+	display:table-cell;
+	vertical-align:middle;
 	width:85vw;
-	height:20vh;
-	background-color: #006991;
-	float:left
+	border:0;
+	max-height:20vh;
+	/*background-color: #006991;
+	float:left*/
 }
 
 .clr{
@@ -71,6 +77,7 @@ body{
 
 /*elements*/
 #bottom-container{
+	display:table;
 	color:#fff;
 	font-family: 'Lato', sans-serif
 }
@@ -78,7 +85,7 @@ body{
 	text-align:center;
 }
 #time{
-	margin-top: 6vh;
+	/*margin-top: 6vh;*/
 	font-size: 3em
 }
 #date{
@@ -86,7 +93,8 @@ body{
 	font-size: 2em
 }
 #info{
-	padding: 2vh;
+	padding:0 2vh;
+	max-height:20vh;
 }
 #info-title{
 	font-family: 'Playfair Display', serif !important;
@@ -95,4 +103,16 @@ body{
 }
 #info-content{
 	font-size: 2em
+}
+
+@media only screen and (max-width: 1350px){
+	#time{
+		font-size: 2em
+	}
+	#date{
+		font-size: 0.75em
+	}
+	#info-title{
+		font-size: 2em
+	}
 }
