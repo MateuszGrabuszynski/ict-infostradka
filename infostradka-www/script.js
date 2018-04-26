@@ -1,5 +1,5 @@
 //to be filled before use:
-var apiUrl = 'http://127.0.0.1:8080';
+var apiUrl = 'http://192.168.1.159:8080';
 var etagPath = "/etag";
 var jsonPath = '/api'
 
@@ -18,9 +18,7 @@ var currentLeftTimer = 0;
 var currentRightTimer = 0;
 var currentNewsTimer = 0;
 
-var currentLeft = {};
-var currentRight = {};
-var currentNews = {};
+var currentJson = {};
 
 //downloading etag from API
 function getEtag(){
@@ -35,67 +33,67 @@ function getEtag(){
 //downloading json from API
 function getJson(){
 	console.log('inside getJson')
-	//currentJson = jQuery.getJSON(apiUrl + jsonPath);
+	currentJson = jQuery.getJSON(apiUrl + jsonPath);
 	
-	// /*
+	/*
 	currentJson = {
-		'left':
+		"left":
 		[
 			{
-				'since': '2018-04-10 22:00',
-				'until': '2019-04-10 22:00',
-				'duration': 5,
-				'type': 'video',
-				'content': {
-					'source': 'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4',
-					'subtitles':''
+				"since": "2018-04-10 22:00",
+				"until": "2019-04-10 22:00",
+				"duration": 5,
+				"type": "video",
+				"content": {
+					"source": "http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4",
+					"subtitles":""
 				}
 			},
 			{
-				'since': '2018-04-10 22:00',
-				'until': '2019-04-10 22:00',
-				'duration': 15,
-				'type': 'www',
-				'content': {
-					'source': 'http://example.org/'
+				"since": "2018-04-10 22:00",
+				"until": "2019-04-10 22:00",
+				"duration": 15,
+				"type": "www",
+				"content": {
+					"source": "http://example.org/"
 				}
 			},
 			{
-				'since': '2018-04-10 22:00',
-				'until': '2019-04-10 22:00',
-				'duration': 15,
-				'type': 'www',
-				'content': {
-					'source': 'http://example.com/'
+				"since": "2018-04-10 22:00",
+				"until": "2019-04-10 22:00",
+				"duration": 15,
+				"type": "www",
+				"content": {
+					"source": "http://example.com/"
 				}
 			}
 		],
-		'right':
+		"right":
 		[
 			{
-				'since': '2018-04-10 22:00',
-				'until': '2019-04-10 22:00',
-				'duration': 5,
-				'source': 'https://c1cleantechnicacom-wpengine.netdna-ssl.com/files/2018/02/Wind-Power-Birds.jpg'
+				"since": "2018-04-10 22:00",
+				"until": "2019-04-10 22:00",
+				"duration": 5,
+				"source": "https://c1cleantechnicacom-wpengine.netdna-ssl.com/files/2018/02/Wind-Power-Birds.jpg"
 			}
 		],
-		'news':
+		"news":
 		[
 			{
-				'since': '2018-04-10 22:00',
-				'until': '2019-04-10 22:00',
-				'duration': 15,
-				'title': 'Aaa, kotki dwa',
-				'content': '...szarobure obydwa czy coś tam jakoś tam coś.<br><br>BARDZO DUŻO TEKSTU TUTAJ...',
-				'important': 0
+				"since": "2018-04-10 22:00",
+				"until": "2019-04-10 22:00",
+				"duration": 15,
+				"title": "Aaa, kotki dwa",
+				"content": "...szarobure obydwa czy coś tam jakoś tam coś.<br><br>BARDZO DUŻO TEKSTU TUTAJ...",
+				"important": 0
 			},
 			{
-				'since': '2018-04-10 22:00',
-				'until': '2019-04-10 22:00',
-				'duration': 5,
-				'title': 'News2',
-				'content': 'Lill news numero due',
-				'important': 1
+				"since": "2018-04-10 22:00",
+				"until": "2019-04-10 22:00",
+				"duration": 5,
+				"title": "News2",
+				"content": "Lill news numero due",
+				"important": 1
 			}
 		]
 	};
@@ -111,7 +109,7 @@ var newsN = 0;
 function rotator(){
 	//checking weather to change or not to change (that is the question)
 	//console.log('currentLeftTimer: ' + currentLeftTimer + ' / ' + Object(currentJson['left'][leftN]['duration']));
-	console.log(JSON.stringify(currentJson['right'][rightN]['duration']));
+	console.log(currentJson['responseText']['right'][rightN]['duration']);
 	
 	
 	if(currentLeftTimer >= JSON.stringify(currentJson['left'][leftN]['duration'])){

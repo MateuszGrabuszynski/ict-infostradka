@@ -4,6 +4,7 @@ For our own convenience, documentation of this project will only be held in Poli
 Projekt zintegrowanego systemu wyświetlaczy informacyjnych opartych o komputery jednopłytkowe Raspberry Pi, realizowany w ramach zajęć projektowych z Podstaw telekomunikacji.
 
 ## Przygotowania
+### Klient
 Aby przygotować Raspberry Pi do poprawnego działania w systemie należy kolejno:
 1. Pobrać ze strony https://www.raspberrypi.org/downloads/raspbian/ pełną wersję systemu Raspbian (with desktop);
 2. Poprzez program Etcher, bądź inny służący do tego celu, zgrać pobrany obraz płyty na kartę microSD;
@@ -36,6 +37,10 @@ Aby przygotować Raspberry Pi do poprawnego działania w systemie należy kolejn
 Po zrestartowaniu urządzenia na monitorze powinna się wyświetlić odpowiednia strona. Pierwsze pobieranie paczek informacji z serwera może trwać kilka minut. Jeśli jednak po kilku minutach urządzenie nadal wyświetla biały ekran bądź wyświetli się komunikat "Aw, snap!" ze znajomym dinozaurem - należy w pierwszej kolejności sprawdzić połączenie internetowe (polecenia `ifconfig` oraz `ping`), a następnie podane URL serwera i dane konfiguracyjne w pliku.  
 
 Zaczerpnięto z pewnymi zmianami z https://github.com/elalemanyo/raspberry-pi-kiosk-screen
+
+### Serwer
+Po przejściu w konsoli do folderu z serwerem należy podać następujące komendy:  
+`export FLASK_APP=infostradka.py` dla systemu Windows lub `set FLASK_APP=infostradka.py` dla systemu Linux, i dalej `python -m flask run --host=0.0.0.0`.
 
 ## Ograniczenia
 System w fazie developerskiej - odnajdowane ograniczenia będą dodawane na bieżąco.
