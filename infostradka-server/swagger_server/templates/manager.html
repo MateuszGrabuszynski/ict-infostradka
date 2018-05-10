@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>infostradka - manager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="Stylesheet" type="text/css" href="/static/manager.css"/>
+</head>
+<body>
+<header>
+	<div id="header-left">
+	<a href="manager.html">
+	<picture>
+		<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
+		<source srcset="/static/infostradka-logo-500px.png" type="image/png"> 
+		<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
+	</picture>
+	</a>
+	</div>
+	<div id="header-right">
+		<nav>
+			<a href="displays.html">Podłączone wyświetlacze</a>
+			<a href="rotators.html">Rotator</a>
+		</nav>
+	</div>
+</header>
+<section>
+	<h1>Witaj {{name}}!</h1>
+	Liczba podłączonych urządzeń: {{nodisplays}}<br />
+	Liczba wyświetlanych elementów:
+	{{norotatorelements}}
+</section>
+<aside></aside>
+<footer>
+&copy; 2018 <picture>
+		<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
+		<source srcset="/static/infostradka-logo-500px.png" type="image/png"> 
+		<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
+	</picture>
+<a href="https://github.com/MateuszGrabuszynski/ict-infostradka">Github</a><a href="https://github.com/MateuszGrabuszynski/ict-infostradka#autorzy">Autorzy projektu</a>
+<span id="version">wersja: {{version}}</span>
+</footer>
+</body>
+</html>

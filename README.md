@@ -1,4 +1,5 @@
-For our own convenience, documentation of this project will only be held in Polish. At least, until we decide otherwise.
+This version is currently in development! For our own convenience, documentation of this project will only be held in Polish. At least, until we decide otherwise.
+Wersja dostępna Dokumentacja, dla naszej własnej wygody, będzie prowadzona w języku polskim. Przynajmniej do czasu, gdy nie zdecydujemy inaczej.
 
 # Infostradka
 Projekt zintegrowanego systemu wyświetlaczy informacyjnych opartych o komputery jednopłytkowe Raspberry Pi, realizowany w ramach zajęć projektowych z Podstaw telekomunikacji.
@@ -31,7 +32,7 @@ Aby przygotować Raspberry Pi do poprawnego działania w systemie należy kolejn
            @chromium-browser --noerrdialogs --kiosk --incognito --disable-translate [URL_serwera_głównego!]
            ```
      
-   7. Dodać odpowiednie zmienne konfiguracyjne w pliku (obecnie nie istnieje na repozytorium);
+   7. Dodać odpowiednie zmienne konfiguracyjne w pliku (obecnie nie istnieje na repozytorium)e;
    8. Zrestartować Raspberry Pi poleceniem `sudo reboot now`.  
 
 Po zrestartowaniu urządzenia na monitorze powinna się wyświetlić odpowiednia strona. Pierwsze pobieranie paczek informacji z serwera może trwać kilka minut. Jeśli jednak po kilku minutach urządzenie nadal wyświetla biały ekran bądź wyświetli się komunikat "Aw, snap!" ze znajomym dinozaurem - należy w pierwszej kolejności sprawdzić połączenie internetowe (polecenia `ifconfig` oraz `ping`), a następnie podane URL serwera i dane konfiguracyjne w pliku.  
@@ -39,8 +40,12 @@ Po zrestartowaniu urządzenia na monitorze powinna się wyświetlić odpowiednia
 Zaczerpnięto z pewnymi zmianami z https://github.com/elalemanyo/raspberry-pi-kiosk-screen
 
 ### Serwer
-Po przejściu w konsoli do folderu z serwerem należy podać następujące komendy:  
-`export FLASK_APP=infostradka.py` dla systemu Windows lub `set FLASK_APP=infostradka.py` dla systemu Linux, i dalej `python -m flask run --host=0.0.0.0`.
+Instalacja wersji na dzień dzisiejszy (bez screenshotów, obsługi wideo i innych):
+1. Należy pobrać kod z repozytorium przy użyciu komendy `git clone https://github.com/MateuszGrabuszynski/ict-infostradka.git`;
+2. Przejść do folderu infostradka-server (`cd infostradka-server`);
+3. Zainstalować odpowiednie biblioteki poleceniem `pip3 install -r requirements.txt`;
+4. Uruchomić serwer `python3 -m swagger_server`.
+Mimo wyłączonego trybu debug w konsoli mogą być wypisywane fragmenty zapytań bądź inne niezbędne przy wcześniejszym developmencie elementy. Ostateczna wersja nie będzie zawierała takich elementów.
 
 ## Ograniczenia
 System w fazie developerskiej - odnajdowane ograniczenia będą dodawane na bieżąco.
@@ -51,4 +56,4 @@ System w fazie developerskiej - odnajdowane ograniczenia będą dodawane na bie�
 * Mateusz Grabuszyński
 
 ## Ostatnia zmiana
-2018-03-29 14:13
+2018-05-10 15:07
