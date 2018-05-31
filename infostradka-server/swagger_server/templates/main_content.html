@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>infostradka - manager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="Stylesheet" type="text/css" href="/static/manager.css"/>
+<script src="/static/jquery-3.3.1.min.js"></script>
+<script src="/static/jquery.tablednd.0.8.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script>
+	$(document).ready(function() {
+		$("#settings-tbl").tableDnD();
+		$(function() {
+			$('input[name="start_stop_time"]').daterangepicker({
+				timePicker: true,
+				startDate: moment().startOf('hour'),
+				endDate: moment().startOf('hour').add(32, 'hour'),
+				locale: {
+				  format: 'M/DD hh:mm A'
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+<header>
+	<div id="header-left">
+		<picture>
+			<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
+			<source srcset="/static/infostradka-logo-500px.png" type="image/png">
+			<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
+		</picture>
+	</div>
+	<div id="header-right">
+		<nav>
+			<a href="../manager">Strona główna</a>
+		</nav>
+	</div>
+</header>
+<section>
+	<h1>Ustawienia głównej sekcji:</h1>
+	<form>
+		<table id="settings-tbl">
+			<thead>
+				<tr class="nodrag">
+					<th></th>
+					<th>Rodzaj treści (?)</th>
+					<th>Wyświetlana treść (?)</th>
+					<th>Data startu i końca (?)</th>
+					<th>Czas trwania (?)</th>
+					<th>Opcje (?)</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for element in elements %}
+					<tr>
+						<td><img src="/static/dad.png"></td>
+						<td>
+							<select name="content_type">
+								<option value="www">WWW Page</option>
+								<option value="file">Stored File</option>
+								<option value="yt_video">Youtube Video</option>
+							</select>
+						</td>
+						<td>
+							<span>
+								<input name="www_url" value="{{element[address]}}">
+								<select name="file_path">
+									<option>TMP</option>
+								</select>
+							</span>
+						</td>
+						<td><input name="start_stop_time" type="text"/></td>
+						<td>
+							<input name="period">
+							<select name="unit">
+								<option>sekund</option>
+								<option>minut</option>
+								<option>godzin</option>
+							</select>
+						</td>
+						<td><img src="/static/delete.png"></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tbody>
+				<tr class="nodrag"><td colspan="7">(+)</td></tr>
+			</tbody>
+		</table>
+		<button type="submit">Zapisz zmiany</button>
+	</form>
+</section>
+<aside></aside>
+<footer>
+&copy; 2018 <picture>
+		<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
+		<source srcset="/static/infostradka-logo-500px.png" type="image/png"> 
+		<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
+	</picture>
+<a href="https://github.com/MateuszGrabuszynski/ict-infostradka">Github</a><a href="https://github.com/MateuszGrabuszynski/ict-infostradka#autorzy">Autorzy projektu</a>
+<span id="version">wersja: {{version}}</span>
+</footer>
+</body>
+</html>

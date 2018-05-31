@@ -11,28 +11,31 @@ info:
     name: "MIT"
     url: "https://github.com/MateuszGrabuszynski/ict-infostradka/blob/master/LICENSE"
 host: "0.0.0.0"
-basePath: "/"
+basePath: "/v1"
 schemes:
 - "http"
+securityDefinitions:
+  basicAuth:
+    type: basic
 paths:
-  /index:
+  /display:
     get:
       tags:
-      - "index"
-      summary: "Returns index.html"
+      - "display"
+      summary: "Returns display.html"
       description: ""
-      operationId: "get_index"
+      operationId: "get_display"
       produces:
       - "text/html"
       responses:
         200:
           description: "Ended successfully"
-      x-swagger-router-controller: "swagger_server.controllers.index_controller"
+      x-swagger-router-controller: "swagger_server.controllers.display_controller"
   /manager:
     get:
       tags:
       - "manager"
-      summary: "Returns manager.html"
+      summary: "Main manager's page"
       description: ""
       operationId: "get_manager"
       produces:
@@ -41,7 +44,95 @@ paths:
         200:
           description: "Ended successfully"
       x-swagger-router-controller: "swagger_server.controllers.manager_controller"
-  /api:
+  /manager/displays:
+    get:
+      tags:
+      - "manager"
+      summary: "Availiable displays"
+      description: ""
+      operationId: "get_displays_list"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Ended successfully"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+  /manager/main_content:
+    get:
+      tags:
+      - "manager"
+      summary: "Main displays content"
+      description: ""
+      operationId: "get_displays_content"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Ended successfully"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+    post:
+      tags:
+      - "manager"
+      summary: "Changes content"
+      description:  ""
+      operationId: "update_displays_content"
+      produces:
+      - "application/json"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+      responses:
+        200:
+          description: OK
+  /manager/right_panel:
+    get:
+      tags:
+      - "manager"
+      summary: "Right panel content"
+      description: ""
+      operationId: "get_right_content"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Ended successfully"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+    post:
+      tags:
+      - "manager"
+      summary: "Changes right panel content"
+      description:  ""
+      operationId: "update_right_content"
+      produces:
+      - "application/json"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+      responses:
+        200:
+          description: OK
+  /manager/news_bar:
+    get:
+      tags:
+      - "manager"
+      summary: "News bar content"
+      description: ""
+      operationId: "get_news_bar"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Ended successfully"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+    post:
+      tags:
+      - "manager"
+      summary: "Changes news bar"
+      description:  ""
+      operationId: "update_news_bar"
+      produces:
+      - "application/json"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+      responses:
+        200:
+          description: OK
+  /api/display:
     get:
       tags:
       - "api"
@@ -60,6 +151,55 @@ paths:
               $ref: "#/definitions/Rotator"
         400:
           description: "Pulling rotator elements caused error"
+      x-swagger-router-controller: "swagger_server.controllers.api_controller"
+  /api/display/{display_id}:
+    get:
+      tags:
+      - "api"
+      summary: "Get screenshot"
+      description: ""
+      operationId: "get_screenshot"
+      produces:
+      - "img/jpeg"
+      parameters:
+      - name: "display_id"
+        required: true
+        in: "path"
+        type: "string"
+      responses:
+        200:
+          description: "Getting rotator elements finished successfully"
+          schema:
+            type: "object"
+            format: "binary"
+        400:
+          description: "Error"
+      x-swagger-router-controller: "swagger_server.controllers.api_controller"
+    put:
+      tags:
+      - "api"
+      summary: "Send screenshot"
+      description: ""
+      operationId: "put_screenshot"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "display_id"
+        required: true
+        in: "path"
+        type: "string"
+      - name: "display_name"
+        in: "formData"
+        type: "string"
+      - name: "screenshot"
+        in: "formData"
+        type: "string"
+        format: "binary"
+      responses:
+        200:
+          description: "Ended successfully"
       x-swagger-router-controller: "swagger_server.controllers.api_controller"
 definitions:
   LeftContent:

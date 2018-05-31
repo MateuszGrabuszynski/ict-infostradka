@@ -8,12 +8,12 @@ from swagger_server import util
 from flask import render_template
 
 
-def get_index():  # noqa: E501
-    """Returns index
+def get_display():  # noqa: E501
+    """Returns display page
 
      # noqa: E501
 
 
     :rtype: List[Rotator]
     """
-    return render_template("index.html")
+    return render_template("display.html")

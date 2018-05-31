@@ -7,27 +7,23 @@
 <body>
 <header>
 	<div id="header-left">
-	<a href="manager.html">
-	<picture>
-		<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
-		<source srcset="/static/infostradka-logo-500px.png" type="image/png"> 
-		<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
-	</picture>
-	</a>
+		<picture>
+			<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
+			<source srcset="/static/infostradka-logo-500px.png" type="image/png">
+			<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
+		</picture>
 	</div>
 	<div id="header-right">
-		<nav>
-			<a href="/displays">Podłączone wyświetlacze</a>
-			<a href="/rotators">Elementy rotatora</a>
-			<a href="/settings">Ustawienia wyświetlania</a>
-		</nav>
 	</div>
 </header>
 <section>
-	<h1>Witaj {{name}}!</h1>
-	Liczba podłączonych urządzeń: {{nodisplays}}<br />
-	Liczba wyświetlanych elementów:
-	{{norotatorelements}}
+	<h1>Witaj!</h1>
+	<nav>
+		<a href="./manager/displays">Wyświetlacze</a>
+		<a href="./manager/main_content">Ustawienia sekcji głównej</a>
+		<a href="./manager/right_panel">Ustawienia sekcji prawej</a>
+		<a href="./manager/news_bar">Ustawienia paska informacyjnego</a>
+	</nav>
 </section>
 <aside></aside>
 <footer>
