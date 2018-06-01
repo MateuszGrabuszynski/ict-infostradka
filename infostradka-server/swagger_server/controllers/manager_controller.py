@@ -24,7 +24,9 @@ def get_displays_list():
 
 
 def get_displays_content():
-    return render_template("main_content.html", elements=[{"address": "http://wp.pl"}, {"address": "http://onet.pl"}])
+    return render_template("main_content.html", elements=[{"address": "http://xxx.pl", "period": "5"}, {"address": "http://wp.pl", "type": "file", "file": "1234"},
+                                                          {"address": "http://onet.pl"}],
+                           files=[{"hash": "xxx", "name": "nobody likes me :(.jpg"}, {"hash": "1234", "name": "wybrany pliczek.png"}])
 
 
 def update_displays_content():

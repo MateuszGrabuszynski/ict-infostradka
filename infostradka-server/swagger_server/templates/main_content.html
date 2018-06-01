@@ -10,21 +10,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<script>
-	$(document).ready(function() {
-		$("#settings-tbl").tableDnD();
-		$(function() {
-			$('input[name="start_stop_time"]').daterangepicker({
-				timePicker: true,
-				startDate: moment().startOf('hour'),
-				endDate: moment().startOf('hour').add(32, 'hour'),
-				locale: {
-				  format: 'M/DD hh:mm A'
-				}
-			});
-		});
-	});
-</script>
+<script src="/static/tables-handler.js"></script>
 </head>
 <body>
 <header>
@@ -48,47 +34,58 @@
 			<thead>
 				<tr class="nodrag">
 					<th></th>
-					<th>Rodzaj treści (?)</th>
-					<th>Wyświetlana treść (?)</th>
-					<th>Data startu i końca (?)</th>
-					<th>Czas trwania (?)</th>
-					<th>Opcje (?)</th>
+					<th>Rodzaj treści <img src="/static/question.png"></th>
+					<th>Wyświetlana treść <img src="/static/question.png"></th>
+					<th>Data startu i końca <img src="/static/question.png"></th>
+					<th>Czas trwania [sek.]<img src="/static/question.png"></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for element in elements %}
 					<tr>
-						<td><img src="/static/dad.png"></td>
+						<td style="background-image: url(/static/dad.png); background-repeat: no-repeat; width: 20px;"></td>
 						<td>
 							<select name="content_type">
-								<option value="www">WWW Page</option>
-								<option value="file">Stored File</option>
-								<option value="yt_video">Youtube Video</option>
+								<option value="www"
+										{% if element.type == 'www' %} selected="selected" {% endif %}>
+									Strona WWW
+								</option>
+								<option value="file"
+										{% if element.type == 'file' %} selected="selected" {% endif %}>
+									Zapisany plik
+								</option>
+								<option value="yt"
+										{% if element.type == 'yt' %} selected="selected" {% endif %}>
+									Wideo z Youtube
+								</option>
 							</select>
 						</td>
 						<td>
 							<span>
-								<input name="www_url" value="{{element[address]}}">
-								<select name="file_path">
-									<option>TMP</option>
+								<input name="url" value="{{element.address}}"
+									   {% if element.type == 'file' %} style="display: none;" {% endif %}>
+								<select name="file_hash"
+										{% if element.type != 'file' %} style="display: none;" {% endif %}>
+									{% for file in files %}
+									<option value="file.hash"
+											{% if file.hash == element.file %} selected="selected" {% endif %}>
+										{{file.name}}
+									</option>
+									{% endfor %}
 								</select>
 							</span>
 						</td>
 						<td><input name="start_stop_time" type="text"/></td>
 						<td>
-							<input name="period">
-							<select name="unit">
-								<option>sekund</option>
-								<option>minut</option>
-								<option>godzin</option>
-							</select>
+							<input name="period" value="{{element.period}}">
 						</td>
 						<td><img src="/static/delete.png"></td>
 					</tr>
 				{% endfor %}
 			</tbody>
 			<tbody>
-				<tr class="nodrag"><td colspan="7">(+)</td></tr>
+				<tr class="nodrag"><td colspan="7"><img src="/static/add.png"></td></tr>
 			</tbody>
 		</table>
 		<button type="submit">Zapisz zmiany</button>
