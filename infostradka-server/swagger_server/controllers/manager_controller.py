@@ -3,11 +3,12 @@ import six
 
 from swagger_server.models.rotator import Rotator  # noqa: E501
 from swagger_server import util
-from swagger_server.config import MONGO_HOST, MONGO_PORT
+from swagger_server.config import MONGO_HOST, MONGO_PORT, FILES_DIR
 
 #own
-from flask import render_template
+from flask import render_template, redirect
 from pymongo import MongoClient
+import hashlib, os
 
 
 #1-left,2-right,3-news
@@ -23,6 +24,12 @@ def db_replace(rotator,body):
     if rotator == 3:
         db.news.remove()
         db.news.insert(body)
+
+
+def allowed_file(filename, ALLOWED_EXTENSIONS):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 
 def get_manager():  # noqa: E501
@@ -75,3 +82,57 @@ def get_news_bar():
 
 def update_news_bar(body):
     db_replace(3,body)
+
+def get_file_manager():
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
+    db = client.infostradka
+
+    files = db.files.find({}, {"type": 1, "name": 1, "hash": 1, "_id": 0})
+    filesdb = []
+    for f1 in files:
+        filesdb.append(f1)
+    
+    return render_template("files.html", files=filesdb)
+
+
+def post_file(file):
+    ALLOWED_EXTENSIONS = set(['html', 'htm', 'png', 'jpg', 'jpeg', 'gif'])
+
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
+    db = client.infostradka
+#    bytename = file.filename.encode()+file.read()
+    hash = hashlib.sha256(file.filename.encode()+file.read()).hexdigest()
+
+    print(file.read())
+
+#    print(os.getcwd())
+#    print(file.filename)
+    # check if the post request has the file part
+  #  if 'file' not in request.files:
+  #      flash('No file part')
+  #      return redirect(request.url)
+  #  file = request.files['file']
+
+    if file.filename == '':
+        return redirect("/v1/manager/files?err=emptyfilename")
+    if file and allowed_file(file.filename, ALLOWED_EXTENSIONS):
+        ftype = file.filename.split('.')[1].lower()
+        if ftype == 'htm':
+            ftype = 'html'
+        elif ftype == 'jpg':
+            ftype = 'jpeg'
+        db.files.insert({"type": ftype, "name": file.filename, "hash": hash})
+        fullpath = os.path.join(os.getcwd(), FILES_DIR, hash)
+        file.save(fullpath)
+        print('file saved as:' + fullpath)
+#        file.save(fullpath)
+
+        return redirect("/v1/manager/files")
+
+def delete_file(hash):
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
+    db = client.infostradka
+
+    os.remove(os.path.join(os.getcwd(), FILES_DIR, hash))
+    db.files.remove({"hash": hash})
+    pass

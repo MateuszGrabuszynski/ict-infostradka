@@ -171,6 +171,55 @@ paths:
       responses:
         200:
           description: OK
+  /manager/files:
+    get:
+      tags:
+      - "manager"
+      summary: "File management"
+      description: ""
+      operationId: "get_file_manager"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Ended successfully"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+    post:
+      tags:
+      - "manager"
+      summary: "Post file"
+      description: ""
+      operationId: "post_file"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - name: "file"
+        required: true
+        in: "formData"
+        type: "file"
+        format: "binary"
+      responses:
+        301:
+          description: "Ended successfully"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
+  /manager/files/{hash}:
+    delete:
+      tags:
+      - "manager"
+      summary: "Delete file"
+      description: ""
+      operationId: "delete_file"
+      parameters:
+      - name: "hash"
+        required: true
+        in: "path"
+        type: "string"
+      responses:
+        200:
+          description: "Deleting file finished successfully"
+        400:
+          description: "Error"
+      x-swagger-router-controller: "swagger_server.controllers.manager_controller"
   /api/display:
     get:
       tags:
@@ -241,6 +290,29 @@ paths:
       responses:
         200:
           description: "Ended successfully"
+      x-swagger-router-controller: "swagger_server.controllers.api_controller"
+  /api/files/{hash}:
+    get:
+      tags:
+      - "api"
+      summary: "?"
+      description: "?"
+      operationId: "get_file"
+      produces:
+      - "image/jpeg"
+      - "image/png"
+      - "image/gif"
+      - "text/html"
+      parameters:
+      - name: "hash"
+        required: true
+        in: "path"
+        type: "string"
+      responses:
+        200:
+          description: "Getting file ended successfully"
+        400:
+          description: "Error"
       x-swagger-router-controller: "swagger_server.controllers.api_controller"
 definitions:
   LeftContent:
