@@ -33,6 +33,12 @@ section{
 	padding-left:20px;
 }
 
+td.td-move-ico{
+    background-image: url(/static/dad.png);
+    background-repeat: no-repeat;
+    width: 20px;
+}
+
 /*footer*/
 footer{
 	position:fixed;

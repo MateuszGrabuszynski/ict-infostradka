@@ -10,6 +10,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+<script>
+	var FILES_HTML = '<select name="file_hash" style="display: none;">'+
+	{% for file in files %}'<option value="{{file.hash}}">{{file.name}}</option>'+
+	{% endfor %}
+	'</select>';
+</script>
 <script src="/static/tables-handler.js"></script>
 </head>
 <body>
@@ -29,7 +35,7 @@
 </header>
 <section>
 	<h1>Ustawienia głównej sekcji:</h1>
-	<form>
+	<form id="main_content_change">
 		<table id="settings-tbl">
 			<thead>
 				<tr class="nodrag">
@@ -44,7 +50,7 @@
 			<tbody>
 				{% for element in elements %}
 					<tr>
-						<td style="background-image: url(/static/dad.png); background-repeat: no-repeat; width: 20px;"></td>
+						<td class="td-move-ico"></td>
 						<td>
 							<select name="content_type">
 								<option value="www"
@@ -62,30 +68,28 @@
 							</select>
 						</td>
 						<td>
-							<span>
-								<input name="url" value="{{element.address}}"
-									   {% if element.type == 'file' %} style="display: none;" {% endif %}>
-								<select name="file_hash"
-										{% if element.type != 'file' %} style="display: none;" {% endif %}>
-									{% for file in files %}
-									<option value="file.hash"
-											{% if file.hash == element.file %} selected="selected" {% endif %}>
-										{{file.name}}
-									</option>
-									{% endfor %}
-								</select>
-							</span>
+							<input name="url" value="{{element.address}}"
+								   {% if element.type == 'file' %} style="display: none;" {% endif %}>
+							<select name="file_hash"
+									{% if element.type != 'file' %} style="display: none;" {% endif %}>
+								{% for file in files %}
+								<option value="{{file.hash}}"
+										{% if file.hash == element.file %} selected="selected" {% endif %}>
+									{{file.name}}
+								</option>
+								{% endfor %}
+							</select>
 						</td>
 						<td><input name="start_stop_time" type="text"/></td>
 						<td>
-							<input name="period" value="{{element.period}}">
+							<input name="duration" value="{{element.duration}}">
 						</td>
-						<td><img src="/static/delete.png"></td>
+						<td><img class="delete-btn" src="/static/delete.png"></td>
 					</tr>
 				{% endfor %}
 			</tbody>
 			<tbody>
-				<tr class="nodrag"><td colspan="7"><img src="/static/add.png"></td></tr>
+				<tr class="nodrag"><td colspan="7"><img class="add-main-btn" src="/static/add.png"></td></tr>
 			</tbody>
 		</table>
 		<button type="submit">Zapisz zmiany</button>
