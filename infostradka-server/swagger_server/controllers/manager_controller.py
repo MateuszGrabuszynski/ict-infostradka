@@ -3,6 +3,7 @@ import six
 
 from swagger_server.models.rotator import Rotator  # noqa: E501
 from swagger_server import util
+from swagger_server.config import MONGO_HOST, MONGO_PORT
 
 #own
 from flask import render_template
@@ -11,7 +12,7 @@ from pymongo import MongoClient
 
 #1-left,2-right,3-news
 def db_replace(rotator,body):
-    client = MongoClient('localhost', 27017)
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
     db = client.infostradka
     if rotator == 1:
         db.left.remove()
@@ -40,7 +41,7 @@ def get_displays_list():
 
 
 def get_displays_content():
-    client = MongoClient('localhost', 27017)
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
     db = client.infostradka
 
     left = db.left.find({}, {"since": 1, "until": 1, "duration": 1, "type": 1, "content": 1, "_id": 0})

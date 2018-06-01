@@ -3,6 +3,7 @@ import six
 
 from swagger_server.models.rotator import Rotator  # noqa: E501
 from swagger_server import util
+from swagger_server.config import MONGO_HOST, MONGO_PORT
 
 #own
 from pymongo import MongoClient
@@ -18,7 +19,7 @@ def get_elements():  # noqa: E501
 
     :rtype: List[Rotator]
     """
-    client = MongoClient('localhost', 27017)
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
     db = client.infostradka
 
     news = db.news.find({},{"since": 1, "until": 1, "duration": 1, "title": 1, "content": 1, "important": 1, "_id": 0})
@@ -54,7 +55,7 @@ def put_screenshot(display_id, display_name, screenshot):
     ssencoded = base64.b64encode(screenshot.read()).decode('ascii')
 
     #db handler
-    client = MongoClient('localhost', 27017)
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
     db = client.infostradka #select db infostradka
 
 #    print(display_id)

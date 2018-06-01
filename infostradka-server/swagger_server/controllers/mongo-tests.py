@@ -1,6 +1,7 @@
 from pymongo import MongoClient
+from swagger_server.config import MONGO_HOST, MONGO_PORT
 
-client = MongoClient('localhost', 27017)
+client = MongoClient(MONGO_HOST, MONGO_PORT)
 db = client.infostradka
 news = db.news.find()
 left = db.left.find()
