@@ -83,6 +83,7 @@ def get_news_bar():
 def update_news_bar(body):
     db_replace(3,body)
 
+
 def get_file_manager():
     client = MongoClient(MONGO_HOST, MONGO_PORT)
     db = client.infostradka
@@ -122,10 +123,11 @@ def post_file(file):
     else:
         return redirect("/v1/manager/files?err=forbiddenfiletype")
 
+
 def delete_file(hash):
     client = MongoClient(MONGO_HOST, MONGO_PORT)
     db = client.infostradka
 
     os.remove(os.path.join(os.getcwd(), FILES_DIR, hash))
     db.files.remove({"hash": hash})
-    pass
+

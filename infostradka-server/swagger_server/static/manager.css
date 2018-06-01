@@ -28,16 +28,51 @@ nav a:hover,footer a:hover{
 	color:#93cddd;
 }
 
+.clr{
+    clear: both;
+}
+
 /*mid*/
 section{
-	padding-left:20px;
+	padding: 0 20px;
+	margin-bottom: 80px;
 }
 
 td.td-move-ico{
-    background-image: url(/static/dad.png);
+    background-image: url(/static/dnd.png);
     background-repeat: no-repeat;
     width: 20px;
 }
+
+div.file{
+    float: left;
+    padding: 5px;
+    width: 150px;
+    border: #424242 1px solid;
+    margin: 20px;
+    text-align: center;
+}
+
+div.file .file-ico{
+    margin-bottom: 10px;
+}
+
+div.file p{
+    margin: 0px;
+}
+
+div.file input{
+    width: calc(90% - 4px);
+    display: block;
+    margin: 0px auto;
+    border: 0;
+    text-align: center;
+}
+
+div.file .delete-file-btn{
+    padding: 10px;
+}
+
 
 /*footer*/
 footer{
