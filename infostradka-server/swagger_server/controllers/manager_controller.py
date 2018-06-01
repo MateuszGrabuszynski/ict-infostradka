@@ -6,6 +6,22 @@ from swagger_server import util
 
 #own
 from flask import render_template
+from pymongo import MongoClient
+
+
+#1-left,2-right,3-news
+def db_replace(rotator,body):
+    client = MongoClient('localhost', 27017)
+    db = client.infostradka
+    if rotator == 1:
+        db.left.remove()
+        db.left.insert(body)
+    if rotator == 2:
+        db.right.remove()
+        db.right.insert(body)
+    if rotator == 3:
+        db.news.remove()
+        db.news.insert(body)
 
 
 def get_manager():  # noqa: E501
@@ -24,26 +40,37 @@ def get_displays_list():
 
 
 def get_displays_content():
-    return render_template("main_content.html", elements=[{"address": "http://xxx.pl", "period": "5"}, {"address": "http://wp.pl", "type": "file", "file": "1234"},
-                                                          {"address": "http://onet.pl"}],
-                           files=[{"hash": "xxx", "name": "nobody likes me :(.jpg"}, {"hash": "1234", "name": "wybrany pliczek.png"}])
+    client = MongoClient('localhost', 27017)
+    db = client.infostradka
+
+    left = db.left.find({}, {"since": 1, "until": 1, "duration": 1, "type": 1, "content": 1, "_id": 0})
+    leftdb = []
+    for d1 in left:
+       leftdb.append(d1)
+
+    files = db.files.find({}, {"name": 1, "hash": 1, "_id": 0})
+    filesdb = []
+    for f1 in files:
+       filesdb.append(f1)
+
+    return render_template("main_content.html", elements=leftdb, files=filesdb)
 
 
-def update_displays_content():
-    pass
+def update_displays_content(body):
+    db_replace(1,body)
 
 
 def get_right_content():
     pass
 
 
-def update_right_content():
-    pass
+def update_right_content(body):
+    db_replace(2,body)
 
 
 def get_news_bar():
     pass
 
 
-def update_news_bar():
-    pass
+def update_news_bar(body):
+    db_replace(3,body)

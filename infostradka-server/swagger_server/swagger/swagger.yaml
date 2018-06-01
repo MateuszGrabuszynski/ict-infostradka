@@ -76,8 +76,21 @@ paths:
       summary: "Changes content"
       description:  ""
       operationId: "update_displays_content"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Whole left content"
+        required: true
+        schema:
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/definitions/LeftElement'
       x-swagger-router-controller: "swagger_server.controllers.manager_controller"
       responses:
         200:
@@ -101,8 +114,21 @@ paths:
       summary: "Changes right panel content"
       description:  ""
       operationId: "update_right_content"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "?"
+        required: true
+        schema:
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/definitions/RightElement'
       x-swagger-router-controller: "swagger_server.controllers.manager_controller"
       responses:
         200:
@@ -126,8 +152,21 @@ paths:
       summary: "Changes news bar"
       description:  ""
       operationId: "update_news_bar"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "?"
+        required: true
+        schema:
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/definitions/NewsElement'
       x-swagger-router-controller: "swagger_server.controllers.manager_controller"
       responses:
         200:
@@ -191,11 +230,13 @@ paths:
         in: "path"
         type: "string"
       - name: "display_name"
+        required: true
         in: "formData"
         type: "string"
       - name: "screenshot"
+        required: true
         in: "formData"
-        type: "string"
+        type: "file"
         format: "binary"
       responses:
         200:
@@ -233,7 +274,7 @@ definitions:
         - "video"
         - "stream"
       content:
-        type: "array"
+        type: "object"
         items:
           $ref: "#/definitions/LeftContent"
     example:

@@ -1,7 +1,7 @@
 //to be filled before use:
-var apiUrl = '/api';
+var apiUrl = '/v1/api';
 var etagPath = "/etag";
-var jsonPath = '/json'
+var jsonPath = '/display'
 
 //clock
 $(document).ready(function() {
