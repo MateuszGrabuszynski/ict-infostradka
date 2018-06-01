@@ -7,7 +7,7 @@ $(document).ready(function() {
         '<option value="www">Strona WWW</option><option value="file">Zapisany plik</option>'+
         '<option value="yt">Wideo z Youtube</option></select></td><td><input name="url" value="" style="">'+
         FILES_HTML +
-        '</td><td><input name="start_stop_time" type="text"></td><td><input name="period" value="">'+
+        '</td><td><input name="start_stop_time" type="text"></td><td><input name="duration" value="">'+
         '</td><td><img class="delete-btn" src="/static/delete.png"></td></tr>')
 
         // renew table handlers
@@ -38,8 +38,6 @@ $(document).ready(function() {
             });
         });
 
-        console.log(req);
-
         $.ajax({
             type: "POST",
             url: "/v1/manager/main_content",
@@ -65,8 +63,8 @@ function table_events_handlers(){
     // date-time range picker
     $('input[name="start_stop_time"]').daterangepicker({
         timePicker: true,
-        startDate: moment().startOf('hour'),
-        endDate: moment().startOf('hour').add(32, 'hour'),
+//        startDate: moment().startOf('hour'),
+//        endDate: moment().startOf('hour').add(32, 'hour'),
         locale: {
           format: 'Y-MM-DD HH:mm'
         }

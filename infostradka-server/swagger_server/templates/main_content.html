@@ -68,7 +68,7 @@
 							</select>
 						</td>
 						<td>
-							<input name="url" value="{{element.address}}"
+							<input name="url" value="{{element.content.source}}"
 								   {% if element.type == 'file' %} style="display: none;" {% endif %}>
 							<select name="file_hash"
 									{% if element.type != 'file' %} style="display: none;" {% endif %}>
@@ -80,7 +80,7 @@
 								{% endfor %}
 							</select>
 						</td>
-						<td><input name="start_stop_time" type="text"/></td>
+						<td><input name="start_stop_time" value="{{element.since}} - {{element.until}}" type="text"/></td>
 						<td>
 							<input name="duration" value="{{element.duration}}">
 						</td>
