@@ -73,6 +73,22 @@ div.file .delete-file-btn{
     padding: 10px;
 }
 
+div.screenshot{
+    width: calc(50% - 20px);
+    margin: 10px;
+    border: #000 1px solid;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+div.screenshot img{
+    max-width: 100%
+}
+
+div.screenshot input{
+    width: 100%;
+}
+
 
 /*footer*/
 footer{

@@ -43,7 +43,15 @@ def get_manager():  # noqa: E501
 
 
 def get_displays_list():
-    pass
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
+    db = client.infostradka
+
+    scrshots = db.scrshots.find({}, {"display_id": 1, "display_name": 1, "screenshot": 1, "_id": 0})
+    scrshotsdb = []
+    for d1 in scrshots:
+        scrshotsdb.append(d1)
+
+    return render_template("screenshots.html", elements=scrshotsdb)
 
 
 def get_displays_content():

@@ -5,6 +5,8 @@
 <link rel="Stylesheet" type="text/css" href="/static/manager.css"/>
 <script src="/static/jquery-3.3.1.min.js"></script>
 
+<script src="/static/files-handler.js"></script>
+
 </head>
 <body>
 <header>
@@ -22,27 +24,12 @@
 	</div>
 </header>
 <section>
-	<h1>Pliki:</h1>
-	<form id="add_file" enctype="multipart/form-data" action="/v1/manager/files" method="POST">
-		<input type="file" name="file" multiple accept="image/jpg,image/jpeg,image/png,image/gif,text/html">
-		<button type="submit">Dodaj pliki</button>
-	</form>
-	{% for file in files %}
-		<div class="file">
-			{% if file.type == 'image/jpeg' or file.type == 'image/jpg' %}
-			<img class="file-ico" src="/static/jpeg.png">
-			{% elif file.type == 'image/gif' %}
-			<img class="file-ico" src="/static/gif.png">
-			{% elif file.type == 'image/png' %}
-			<img class="file-ico" src="/static/png.png">
-			{% elif file.type == 'text/html' %}
-			<img class="file-ico" src="/static/html.png">
-			{% else %}
-			<img class="file-ico" src="/static/file.png">
-			{% endif %}
-			<input readonly value="{{file.name}}" name="file_name">
-			<input readonly value="{{file.hash}}" name="file_hash">
-			<img class="delete-file-btn" hash="{{file.hash}}" src="/static/delete.png">
+	<h1>Screenshots:</h1>
+	{% for element in elements %}
+		<div class="screenshot">
+			<img class="file-ico" src="data:image/png;base64, {{element.screenshot}}">
+			<p>{{element.display_name}}</p>
+			<input readonly value="{{element.display_id}}" name="file_hash">
 		</div>
 	{% endfor %}
 	<div class="clr"></div>
