@@ -8,7 +8,7 @@ from swagger_server.config import MONGO_HOST, MONGO_PORT, FILES_DIR
 #own
 from flask import render_template, redirect
 from pymongo import MongoClient
-import hashlib, os
+import hashlib, os, uuid
 
 
 #1-left,2-right,3-news
@@ -100,18 +100,10 @@ def post_file(file):
 
     client = MongoClient(MONGO_HOST, MONGO_PORT)
     db = client.infostradka
-#    bytename = file.filename.encode()+file.read()
-    hash = hashlib.sha256(file.filename.encode()+file.read()).hexdigest()
 
-    print(file.read())
-
-#    print(os.getcwd())
-#    print(file.filename)
-    # check if the post request has the file part
-  #  if 'file' not in request.files:
-  #      flash('No file part')
-  #      return redirect(request.url)
-  #  file = request.files['file']
+    #hash = uuid
+    hash = uuid.uuid4()
+    print(hash)
 
     if file.filename == '':
         return redirect("/v1/manager/files?err=emptyfilename")
@@ -121,13 +113,14 @@ def post_file(file):
             ftype = 'html'
         elif ftype == 'jpg':
             ftype = 'jpeg'
-        db.files.insert({"type": ftype, "name": file.filename, "hash": hash})
-        fullpath = os.path.join(os.getcwd(), FILES_DIR, hash)
+        db.files.insert({"type": ftype, "name": file.filename, "hash": str(hash)})
+        fullpath = os.path.join(os.getcwd(), FILES_DIR, str(hash))
         file.save(fullpath)
         print('file saved as:' + fullpath)
-#        file.save(fullpath)
 
         return redirect("/v1/manager/files")
+    else:
+        return redirect("/v1/manager/files?err=forbiddenfiletype")
 
 def delete_file(hash):
     client = MongoClient(MONGO_HOST, MONGO_PORT)
