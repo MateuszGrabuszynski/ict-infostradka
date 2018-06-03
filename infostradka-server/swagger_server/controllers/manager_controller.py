@@ -31,7 +31,6 @@ def allowed_file(filename, ALLOWED_EXTENSIONS):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
 def get_manager():  # noqa: E501
     """Returns display
 
@@ -61,7 +60,7 @@ def get_displays_content():
     for f1 in files:
        filesdb.append(f1)
 
-    return render_template("main_content.html", elements=leftdb, files=filesdb)
+    return render_template("content.html", panel_type='main', elements=leftdb, files=filesdb)
 
 
 def update_displays_content(body):
@@ -69,7 +68,20 @@ def update_displays_content(body):
 
 
 def get_right_content():
-    pass
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
+    db = client.infostradka
+
+    right = db.right.find({}, {"since": 1, "until": 1, "duration": 1, "type": 1, "content": 1, "_id": 0})
+    rightdb = []
+    for d1 in right:
+       rightdb.append(d1)
+
+    files = db.files.find({}, {"name": 1, "hash": 1, "_id": 0})
+    filesdb = []
+    for f1 in files:
+       filesdb.append(f1)
+
+    return render_template("content.html", panel_type='right', elements=rightdb, files=filesdb)
 
 
 def update_right_content(body):
@@ -77,7 +89,15 @@ def update_right_content(body):
 
 
 def get_news_bar():
-    pass
+    client = MongoClient(MONGO_HOST, MONGO_PORT)
+    db = client.infostradka
+
+    news = db.news.find({}, {"since": 1, "until": 1, "duration": 1, "title": 1, "content": 1, "important": 1, "_id": 0})
+    newsdb = []
+    for d1 in news:
+       newsdb.append(d1)
+
+    return render_template("news_bar.html", elements=newsdb)
 
 
 def update_news_bar(body):

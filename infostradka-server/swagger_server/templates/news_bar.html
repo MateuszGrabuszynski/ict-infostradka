@@ -34,16 +34,17 @@
 	</div>
 </header>
 <section>
-	<h1>Ustawienia głównej sekcji:</h1>
-	<form id="main_content_change">
+	<h1>Ustawienia paska news:</h1>
+	<form id="news_content_change">
 		<table id="settings-tbl">
 			<thead>
 				<tr class="nodrag">
 					<th></th>
-					<th>Rodzaj treści <img src="/static/question.png"></th>
-					<th>Wyświetlana treść <img src="/static/question.png"></th>
+					<th>Tytuł <img src="/static/question.png"></th>
+					<th>Treść <img src="/static/question.png"></th>
 					<th>Data startu i końca <img src="/static/question.png"></th>
 					<th>Czas trwania [sek.]<img src="/static/question.png"></th>
+					<th>Wyróżnienie <img src="/static/question.png"></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -52,44 +53,25 @@
 					<tr>
 						<td class="td-move-ico"></td>
 						<td>
-							<select name="content_type">
-								<option value="www"
-										{% if element.type == 'www' %} selected="selected" {% endif %}>
-									Strona WWW
-								</option>
-								<option value="file"
-										{% if element.type == 'file' %} selected="selected" {% endif %}>
-									Zapisany plik
-								</option>
-								<option value="yt"
-										{% if element.type == 'yt' %} selected="selected" {% endif %}>
-									Wideo z Youtube
-								</option>
-							</select>
+							<input name="title" value="{{element.title}}">
 						</td>
 						<td>
-							<input name="url" value="{{element.content.source}}"
-								   {% if element.type == 'file' %} style="display: none;" {% endif %}>
-							<select name="file_hash"
-									{% if element.type != 'file' %} style="display: none;" {% endif %}>
-								{% for file in files %}
-								<option value="{{file.hash}}"
-										{% if file.hash == element.file %} selected="selected" {% endif %}>
-									{{file.name}}
-								</option>
-								{% endfor %}
-							</select>
+							<input name="content" value="{{element.content}}">
 						</td>
 						<td><input name="start_stop_time" value="{{element.since}} - {{element.until}}" type="text"/></td>
 						<td>
 							<input name="duration" value="{{element.duration}}">
+						</td>
+						<td>
+							<input type="checkbox" name="important" value="true"
+								{% if element.important %}checked="checked"{% endif %}>
 						</td>
 						<td><img class="delete-btn" src="/static/delete.png"></td>
 					</tr>
 				{% endfor %}
 			</tbody>
 			<tbody>
-				<tr class="nodrag"><td colspan="7"><img class="add-main-btn" src="/static/add.png"></td></tr>
+				<tr class="nodrag"><td colspan="7"><img class="add-news-btn" src="/static/add.png"></td></tr>
 			</tbody>
 		</table>
 		<button type="submit">Zapisz zmiany</button>

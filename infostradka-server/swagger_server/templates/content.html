@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>infostradka - manager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="Stylesheet" type="text/css" href="/static/manager.css"/>
+<script src="/static/jquery-3.3.1.min.js"></script>
+<script src="/static/jquery.tablednd.0.8.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script>
+	var FILES_HTML = '<select name="file_hash" style="display: none;">'+
+	{% for file in files %}'<option value="{{file.hash}}">{{file.name}}</option>'+
+	{% endfor %}
+	'</select>';
+</script>
+<script src="/static/tables-handler.js"></script>
+</head>
+<body>
+<header>
+	<div id="header-left">
+		<picture>
+			<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
+			<source srcset="/static/infostradka-logo-500px.png" type="image/png">
+			<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
+		</picture>
+	</div>
+	<div id="header-right">
+		<nav>
+			<a href="../manager">Strona główna</a>
+		</nav>
+	</div>
+</header>
+<section>
+	<h1>Ustawienia sekcji {% if panel_type == 'main' %}głównej{% else %}prawej{% endif %}:</h1>
+	<form id="{{panel_type}}_content_change">
+		<table id="settings-tbl">
+			<thead>
+				<tr class="nodrag">
+					<th></th>
+					<th>Rodzaj treści <img src="/static/question.png"></th>
+					<th>Wyświetlana treść <img src="/static/question.png"></th>
+					<th>Data startu i końca <img src="/static/question.png"></th>
+					<th>Czas trwania [sek.]<img src="/static/question.png"></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for element in elements %}
+					<tr>
+						<td class="td-move-ico"></td>
+						<td>
+							<select name="content_type">
+								<option value="www"
+										{% if element.type == 'www' %} selected="selected" {% endif %}>
+									Strona WWW
+								</option>
+								<option value="file"
+										{% if element.type == 'file' %} selected="selected" {% endif %}>
+									Zapisany plik
+								</option>
+								<option value="yt"
+										{% if element.type == 'yt' %} selected="selected" {% endif %}>
+									Wideo z Youtube
+								</option>
+							</select>
+						</td>
+						<td>
+							<input name="url" value="{{element.content.source}}"
+								   {% if element.type == 'file' %} style="display: none;" {% endif %}>
+							<select name="file_hash"
+									{% if element.type != 'file' %} style="display: none;" {% endif %}>
+								{% for file in files %}
+								<option value="{{file.hash}}"
+										{% if file.hash == element.content.source %} selected="selected" {% endif %}>
+									{{file.name}}
+								</option>
+								{% endfor %}
+							</select>
+						</td>
+						<td><input name="start_stop_time" value="{{element.since}} - {{element.until}}" type="text"/></td>
+						<td>
+							<input name="duration" value="{{element.duration}}">
+						</td>
+						<td><img class="delete-btn" src="/static/delete.png"></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tbody>
+				<tr class="nodrag"><td colspan="7"><img class="add-main-btn" src="/static/add.png"></td></tr>
+			</tbody>
+		</table>
+		<button type="submit">Zapisz zmiany</button>
+	</form>
+</section>
+<aside></aside>
+<footer>
+&copy; 2018 <picture>
+		<source srcset="/static/infostradka-logo-500px.webp" type="image/webp">
+		<source srcset="/static/infostradka-logo-500px.png" type="image/png"> 
+		<img src="/static/infostradka-logo-500px.png" alt="infostradka logo">
+	</picture>
+<a href="https://github.com/MateuszGrabuszynski/ict-infostradka">Github</a><a href="https://github.com/MateuszGrabuszynski/ict-infostradka#autorzy">Autorzy projektu</a>
+<span id="version">wersja: {{version}}</span>
+</footer>
+</body>
+</html>

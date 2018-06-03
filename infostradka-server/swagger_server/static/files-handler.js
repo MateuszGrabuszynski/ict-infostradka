@@ -9,12 +9,9 @@ $(document).ready(function() {
         $.ajax({
             type: "DELETE",
             url: "/v1/manager/files/" + hash,
-            success: function(jqXHR) {
+            complete: function(jqXHR) {
                 $(event.target).parent().remove();
                 alert("Usunięto!");
-            },
-            error: function(){
-                alert('Coś poszło nie tak... :(');
             }
         });
     });
