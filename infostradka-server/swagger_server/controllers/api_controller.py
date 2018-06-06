@@ -24,7 +24,7 @@ def get_elements():  # noqa: E501
 
     news = db.news.find({},{"since": 1, "until": 1, "duration": 1, "title": 1, "content": 1, "important": 1, "_id": 0})
     left = db.left.find({}, {"since": 1, "until": 1, "duration": 1, "type": 1, "content": 1, "_id": 0})
-    right = db.right.find({}, {"since": 1, "until": 1, "duration": 1, "source": 1, "_id": 0})
+    right = db.right.find({}, {"since": 1, "until": 1, "duration": 1, "content": 1, "_id": 0})
 
     newsdb = []
     leftdb = []
