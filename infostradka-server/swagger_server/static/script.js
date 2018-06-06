@@ -1,98 +1,100 @@
+//TODOS: 1) Adaptation to net loss
+//       2) First run loading time
+
 //to be filled before use:
-var apiUrl = '/v1/api';
-var etagPath = "/etag";
-var jsonPath = '/display'
+apiUrl = '/v1/api';
+jsonPath = '/display'
 
-//clock
-$(document).ready(function() {
-	$('#bottom-left').simpleClock();
-	getEtag();
-	setInterval(getEtag, 0.1*60*1000); //call for changes every 5 min
-	setInterval(rotator, 1000);
-});
-
-//global var helpers
-var currentEtag = '';
-
-var currentLeftTimer = 0;
-var currentRightTimer = 0;
-var currentNewsTimer = 0;
-
-var currentLeft = {};
-var currentRight = {};
-var currentNews = {};
-
-//downloading etag from API
-function getEtag(){
-	console.log('inside getEtag');
-	var downloadedEtag = 'barbra?'
-	//var downloadedEtag = jQuery.get(apiUrl + etagPath);
-	if (currentEtag != downloadedEtag){
-		getJson();
-	}
-}
-
+//dont mess with the stuff below though
 //downloading json from API
 function getJson(){
-	console.log('inside getJson')
-	currentJson = jQuery.getJSON(apiUrl + jsonPath);
-	//currentJson = {"left":[{"since":"2018-04-10 22:00","until":"2019-04-10 22:00","duration":5,"type":"video","content":{"source":"http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4","subtitles":""}},{"since":"2018-04-10 22:00","until":"2019-04-10 22:00","duration":15,"type":"www","content":{"source":"https://www.youtube.com/embed/ZY3J3Y_OU0w"}},{"since":"2018-04-10 22:00","until":"2019-04-11 22:00","duration":15,"type":"www","content":{"source":"https://www.tutorialspoint.com/index.htm"}}],"right":[{"since":"2018-04-10 22:00","until":"2019-04-10 22:00","duration":5,"source":"https://c1cleantechnicacom-wpengine.netdna-ssl.com/files/2018/02/Wind-Power-Birds.jpg"}],"news":[{"since":"2018-04-10 22:00","until":"2019-04-10 22:00","duration":15,"title":"Aaa, kotki jeden","content":"...szarobure obydwa czy coś tam jakoś tam coś.<br><br>BARDZO DUŻO TEKSTU TUTAJ...","important":0},{"since":"2018-04-10 22:00","until":"2019-04-10 22:00","duration":5,"title":"News2","content":"Lill news numero due","important":1}]}
-	
-	console.log(currentJson);
+        console.log('inside getJson')
+        currentJson = jQuery.getJSON(apiUrl + jsonPath);
+
+        console.log(currentJson);
 }
 
-var leftN = 0;
-var rightN = 0;
-var newsN = 0;
+//global var helpers
+currentLeftTimer = 0;
+currentRightTimer = 0;
+currentNewsTimer = 0;
+
+leftN = 0;
+rightN = 0;
+newsN = 0;
 
 function expired(since, to){
 	var nowDate = new Date();
 	var sinceDate = new Date(since);
 	var toDate = new Date(to);
 	if (nowDate > sinceDate && nowDate < toDate){
+		console.log('puszczam');
 		return false;
 	}else{
+		console.log('smierdzisz STARYM kapciem');
 		return true;
 	}
 }
 
+//helps to put best fit on first screen instead of waiting
+function firstRun(){
+	console.log('ruszylem jako pierwszy!');
+	if(typeof currentJson.responseJSON != 'undefined'){
+		$('#top-left').attr('src', Object(currentJson['responseJSON']['left'][leftN]['content']['source']));
+		$('#top-right').attr('src', Object(currentJson['responseJSON']['right'][rightN]['content']['source']));
+		if(currentJson['responseJSON']['news'][newsN]['important'] == true){
+                        $('#bottom-container').css('background-color', '#910000');
+                }
+                else{
+                        $('#bottom-container').css('background-color', '#006991');
+                }
+                $('#info-title').html(Object(currentJson['responseJSON']['news'][newsN]['title']));
+                $('#info-main').html(Object(currentJson['responseJSON']['news'][newsN]['content']));
+	}
+}
+
 function rotator(){
-	//checking weather to change or not to change (that is the question)
-	//console.log('currentLeftTimer: ' + currentLeftTimer + ' / ' + Object(currentJson['left'][leftN]['duration']));
-	console.log(JSON.stringify(currentJson['right'][rightN]['duration']));
-	
-	
-	if(currentLeftTimer >= JSON.stringify(currentJson['left'][leftN]['duration'])){
-		
-		if(leftN >= Object.keys(currentJson['left']).length-1){
+	if(typeof currentJson.responseJSON != 'undefined'){ //indentation retardo
+//	console.log(currentLeftTimer);
+//	console.log(JSON.stringify(currentJson['responseJSON']['left'][leftN]['duration']));
+//	console.log(JSON.stringify(Number(currentJson['responseJSON']['left'][leftN]['duration'])));
+
+	if(currentLeftTimer >= JSON.stringify(Number(currentJson['responseJSON']['left'][leftN]['duration']))){
+		console.log('tu wlazlem');
+		if(leftN >= Object.keys(currentJson['responseJSON']['left']).length-1){
 			leftN = 0;
 		}
 		else{
+			console.log('dlugosc ok')
 			leftN++;
 		}
-		while(expired(currentJson['left'][leftN]['since'],currentJson['left'][leftN]['until'])){
-			if(leftN >= Object.keys(currentJson['left']).length-1){
+		while(expired(currentJson['responseJSON']['left'][leftN]['since'],currentJson['responseJSON']['left'][leftN]['until'])){
+			if(leftN >= Object.keys(currentJson['responseJSON']['left']).length-1){
 				leftN = 0;
+				console.log('jestem madry!');
+				console.log(leftN);
+				console.log(Object.keys(currentJson['responseJSON']['left']).length-1);
+				console.log('baaaardzo...');
 			}
 			else{
 				leftN++;
 			}
 		}
 		console.log('rotator/changeLeft');
-		$('#top-left').attr('src', Object(currentJson['left'][leftN]['content']['source'])); /*iframe src compatible only for now*/
+		$('#top-left').attr('src', Object(currentJson['responseJSON']['left'][leftN]['content']['source'])); /*iframe src compatible only for now*/
 		currentLeftTimer = 0;
 	}
-	if(currentRightTimer >= JSON.stringify(currentJson['right'][rightN]['duration'])){
-		console.log(Object.keys(currentJson['right']).length);
+	if(currentRightTimer >= JSON.stringify(Number(currentJson['responseJSON']['right'][rightN]['duration']))){
+		console.log(Object.keys(currentJson['responseJSON']['right']).length);
 
-		if(rightN >= Object.keys(currentJson['right']).length-1){
+		if(rightN >= Object.keys(currentJson['responseJSON']['right']).length-1){
 			rightN = 0;
 		}
 		else{
 			rightN++;
 		}
-		while(expired(currentJson['right'][rightN]['since'],currentJson['right'][rightN]['until'])){
-			if(rightN >= Object.keys(currentJson['right']).length-1){
+		while(expired(currentJson['responseJSON']['right'][rightN]['since'],currentJson['responseJSON']['right'][rightN]['until'])){
+			if(rightN >= Object.keys(currentJson['responseJSON']['right']).length-1){
 				rightN = 0;
 			}
 			else{
@@ -100,19 +102,19 @@ function rotator(){
 			}
 		}
 		console.log('rotator/changeRight');
-		$('#top-right').attr('src', Object(currentJson['right'][rightN]['source']));
+		$('#top-right').attr('src', Object(currentJson['responseJSON']['right'][rightN]['content']['source']));
 		currentRightTimer = 0;
 	}
-	if(currentNewsTimer >= JSON.stringify(currentJson['news'][newsN]['duration'])){
+	if(currentNewsTimer >= JSON.stringify(Number(currentJson['responseJSON']['news'][newsN]['duration']))){
 
-		if(newsN >= Object.keys(currentJson['news']).length-1){
+		if(newsN >= Object.keys(currentJson['responseJSON']['news']).length-1){
 			newsN = 0;
 		}
 		else{
 			newsN++;
 		}
-		while(expired(currentJson['news'][newsN]['since'],currentJson['news'][newsN]['until'])){
-			if(newsN >= Object.keys(currentJson['news']).length-1){
+		while(expired(currentJson['responseJSON']['news'][newsN]['since'],currentJson['responseJSON']['news'][newsN]['until'])){
+			if(newsN >= Object.keys(currentJson['responseJSON']['news']).length-1){
 				newsN = 0;
 			}
 			else{
@@ -120,10 +122,17 @@ function rotator(){
 			}
 		}
 		console.log('rotator/changeNews');
-		$('#info-title').html(Object(currentJson['news'][newsN]['title']));
-		$('#info-main').html(Object(currentJson['news'][newsN]['content']));
+		if(currentJson['responseJSON']['news'][newsN]['important'] == true){
+			$('#bottom-container').css('background-color', '#910000');
+		}
+		else{
+			$('#bottom-container').css('background-color', '#006991');
+		}
+		$('#info-title').html(Object(currentJson['responseJSON']['news'][newsN]['title']));
+		$('#info-main').html(Object(currentJson['responseJSON']['news'][newsN]['content']));
 		currentNewsTimer = 0;
 	}
+	} //typeof if (the retardo one)
 	
 	//adding to timers
 	currentLeftTimer++;
@@ -131,3 +140,14 @@ function rotator(){
 	currentNewsTimer++;
 	console.log('tick');
 }
+
+
+//clock
+$(document).ready(function() {
+        $('#bottom-left').simpleClock();
+        setInterval(getJson, 100000); //call for changes every 5 min
+        setInterval(rotator, 1000);
+        getJson();
+	firstRun();
+});
+
