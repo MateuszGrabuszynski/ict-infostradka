@@ -10,7 +10,6 @@ info:
   license:
     name: "MIT"
     url: "https://github.com/MateuszGrabuszynski/ict-infostradka/blob/master/LICENSE"
-host: "0.0.0.0"
 basePath: "/v1"
 schemes:
 - "http"

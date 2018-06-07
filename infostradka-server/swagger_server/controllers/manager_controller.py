@@ -142,8 +142,11 @@ def post_file(file):
             ftype = 'html'
         elif ftype == 'jpg':
             ftype = 'jpeg'
-        db.files.insert({"type": ftype, "name": file.filename, "hash": str(hash)})
-        fullpath = os.path.join(os.getcwd(), FILES_DIR, str(hash))
+            
+        partpath = str(hash)+'.'+ftype
+        
+        db.files.insert({"type": ftype, "name": file.filename, "hash": partpath})
+        fullpath = os.path.join(os.getcwd(), FILES_DIR, partpath)
         file.save(fullpath)
         print('file saved as:' + fullpath)
 

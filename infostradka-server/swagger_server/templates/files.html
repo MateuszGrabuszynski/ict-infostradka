@@ -29,13 +29,13 @@
 	</form>
 	{% for file in files %}
 		<div class="file">
-			{% if file.type == 'image/jpeg' or file.type == 'image/jpg' %}
+			{% if file.type == 'jpeg' or file.type == 'jpg' %}
 			<img class="file-ico" src="/static/jpeg.png">
-			{% elif file.type == 'image/gif' %}
+			{% elif file.type == 'gif' %}
 			<img class="file-ico" src="/static/gif.png">
-			{% elif file.type == 'image/png' %}
+			{% elif file.type == 'png' %}
 			<img class="file-ico" src="/static/png.png">
-			{% elif file.type == 'text/html' %}
+			{% elif file.type == 'html' %}
 			<img class="file-ico" src="/static/html.png">
 			{% else %}
 			<img class="file-ico" src="/static/file.png">
