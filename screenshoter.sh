@@ -1,3 +1,4 @@
+#!/bin/bash
 guid_path='./guid.conf'
 
 if [ -e $guid_path ]; then
@@ -19,7 +20,7 @@ echo $2 #ip
 echo $GUID
 
 while true; do
-scrot 'infostradka.jpg' -d 5 -q 15 -z
+DISPLAY=:0 scrot 'infostradka.jpg' -d 5 -q 15 -z
 curl -X PUT -F "display_id='{$GUID}'" -F "display_name=$1" -F "screenshot=@./infostradka.jpg" http://$2:8080/v1/api/display/$GUID
 done
 
